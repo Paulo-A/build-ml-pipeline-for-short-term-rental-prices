@@ -65,10 +65,18 @@ def go(config: DictConfig):
             )
 
         if "data_check" in active_steps:
-            ##################
-            # Implement here #
-            ##################
-            pass
+            # Check if cleaned data loaded from W&B has expected values
+            _ = mlflow.run(
+                os.path.join(hydra.utils.get_original_cwd(), "src", "data_check"),
+                "main",
+                parameters={
+                    "kl_threshold": config["data_check"]["kl_threshold"],
+                    "ref": "clean_sample.csv:reference",
+                    "csv": "clean_sample.csv:latest",
+                    "min_price": config['etl']['min_price'],
+                    "max_price": config['etl']['max_price']
+                },
+            )
 
         if "data_split" in active_steps:
             ##################
