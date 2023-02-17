@@ -30,7 +30,7 @@ def go(args):
     # Convert last_review to datetime
     df['last_review'] = pd.to_datetime(df['last_review'])
     
-    idx = df['longitude'].between(args.min_longitude, args.max_longitude) & df['latitude'].between(args.min_latitude, args.max_latitude)
+    idx = df['longitude'].between(-74.25, -73.50) & df['latitude'].between(40.5, 41.2)
     df = df[idx].copy()
 
     df.to_csv("clean_sample.csv", index=False)
@@ -89,7 +89,6 @@ if __name__ == "__main__":
         help='The maximum price for the rental prices',
         required=True
     )
-
 
     args = parser.parse_args()
 
